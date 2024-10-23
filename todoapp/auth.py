@@ -80,3 +80,10 @@ def login():
     return render_template('auth/login.html')
 
 
+#cria uma rota para deslogar 
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('pages.index'))    
+    
+
