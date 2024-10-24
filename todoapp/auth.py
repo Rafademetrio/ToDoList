@@ -89,3 +89,7 @@ def logout():
     return redirect(url_for('pages.index'))    
     
 
+@bp.route('/')
+def index():
+    #return render_template('pages/index.html')
+    return "hello"
