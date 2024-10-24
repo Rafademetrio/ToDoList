@@ -23,7 +23,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user =(
-            get_db.execute("SELECT * FROM user WHERE id = ?", (user_id)).fetchone()
+            get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
         )
 
 
@@ -39,19 +39,21 @@ def register():
         user = db.execute("SELECT * FROM user WHERE username = ?", (username)).fetchone()
         
         if user is None:
-            error = "Username inválido"
-        elif not check_password_hash(user["password"], password):
-            error = "Password inválido"
+            error = "Username obrigatório"
+        elif not password:
+            error = "Password obrigatório"
         
         if error is None:
-            session.clear()
-            session["user_id"] = user["id"]
-            return redirect(url_for("pages.index1"))
-        
+            try:
+                db.execute("INSERT INTO user (username, password) VALUES (?, ?)", (username, generate_password_hash(password)),)
+                db.commit()
+            except db.IntegrityError:
+                error = f"Usuário {username} já existe."
+            else:
+                return redirect(url_for('auth.login'))
         flash(error)
     
-    
-    return render_template("auth/login.html")
+    return render_template("auth/register.html")
 
 
 #cria uma rota para o login do usuario
