@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="ui big form">
+    <h1>{% block title %}Nova Tarefa{% endblock %}</h1>
+    <hr>
+    </br>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="ui big form" style="margin: auto; max-width: 650px;"> 
+    <form class="ui form" method="post">
+        <div class="field">
+            <label>Título</label>
+            <input type="text" name="title" id="title" placeholder="title">
+        </div>
+        <div class="field">     
+            <label>Descrição</label>
+            <textarea name="description" cols="80" id="description" placeholder="Description"></textarea>
+        </div>
+        <div>
+            <button class="ui positive basic button" type="submit">
+            <i class="save icon"></i> Salvar
+            </button>
+            <button class="ui negative basic button" type="button" onclick="history.back(-1)">
+                <i class="times icon"></i>Cancelar
+            </button>
+        </div>
+    </form>
+<div>
+{% endblock %}

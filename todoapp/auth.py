@@ -36,9 +36,9 @@ def register():
         db = get_db()
         error = None
         
-        user = db.execute("SELECT * FROM user WHERE username = ?", (username)).fetchone()
+        #user = db.execute("SELECT * FROM user WHERE username = ?", (username)).fetchone()
         
-        if user is None:
+        if not username:
             error = "Username obrigatório"
         elif not password:
             error = "Password obrigatório"
@@ -65,7 +65,7 @@ def login():
         db = get_db()
         error = None
         
-        user = db.execute("SELECT * FROM user WHERE username = ?", (username)).fetchone()
+        user = db.execute("SELECT * FROM user WHERE username = ?", (username,)).fetchone()
         
         if user is None:
             error = "Username inválido."

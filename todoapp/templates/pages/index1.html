@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    {% if g.user %}
+    <h1 class="ui header">
+        <div>
+            <i class="tasks icon"></i>
+            {% block title %} Minha Lista de Tarefas {% endblock %}
+
+            <a href="{{ url_for('pages.create') }}" class="action" data-tooltip="incluir tarefa"><i class="plus circle icon"></i></a>
+        </div>
+    </h1>
+    <hr>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+{% for todolist in todolists %}
+<div class="ui horizontal list big form" style="margin: auto; max-width: 1048px;">
+    <div class="ui cards item">
+        <div class="card">
+            <div class="content">
+                <label>Tarefa</label>
+                <div class="header">
+                    <h2>{{ todolist['title'] }}</h2>
+                </div>
+                <div class="meta">
+                    <label>Situação</label>
+                    {% if not todolist['status'] %}
+                    <a class="ui red tag label">Pendente</a>
+                    {% else %}
+                    <a class="ui green tag label">Concluído</a>
+                    {% endif %}
+                </div>
+                <div class="ui label">by {{ todolist['username'] }} em {{todolist['created_by'].strftime('%d-%m-%Y') }}</div>
+            </div>
+            {% if g.user['id'] == todolist['user_id'] %}
+            <div class="extra content">
+                <a class="ui label circular icon button red" data-tooltip="excluir" href="{{url_for('pages.delete', id=todolist['id']) }}">
+                    <i class="trash icon"></i>
+                </a>
+                <a class="ui label circular icon button orange" data-tooltip="editar" href="{{url_for('pages.update', id=todolist['id']) }}">
+                    <i class="edit icon"></i>
+                </a>
+                <a class="ui label circular icon button green" data-tooltip="finalizar" href="{{url_for('pages.complete', id=todolist['id']) }}">
+                    <i class="check icon"></i>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if not loop.last %}
+{% endif %}
+{% endfor %}
+{% endblock %}
