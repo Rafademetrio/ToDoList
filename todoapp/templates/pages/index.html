@@ -1,50 +1,27 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<head>
-  <title>ToDo-List | {% block title %}{% endblock %}</title>
-  <!--link rel="stylesheet" href="{{ url_for('static', filename='css/semantic.css') }}"-->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css"
-  />
-</head>
+{% block title %} Home {% endblock %}
 
-<body>
-  <nav class="ui secondary menu">
-    <h1>
-      <a class="item" href="" style="background: lightgray">
-        Desenvolvimento Rápido de Aplicações em Python [ARA0095]
-      </a>
+{% block content %}
+
+<section>
+    <h1 class="ui center aligned icon header">
+        <i class="circular massive tasks icon">
+        </i>
+        Bem-vindo à nossa ToDo-List !!
     </h1>
-    <div class="right menu">
-      {% if g.user %}
-      <span class="item">
-        <pre><b>Conectado:</b> {{ g.user['username'] }}</pre>
-      </span>
-      <a class="item" href="{{ url_for('pages.index1') }}"
-        ><i class="home icon"></i>Home
-      </a>
-      <a class="item" href="{{ url_for('auth.logout') }}"
-        ><i class="sign-out icon"></i>Logout
-      </a>
-      {% else %}
-      <a class="item" href="{{ url_for('auth.register') }}"
-        ><i class="edit icon"></i>Registro
-      </a>
-      <a class="item" href="{{ url_for('auth.login')}}"
-        ><i class="sign-in icon"></i>Login
-      </a>
-      {% endif %}
-    </div>
-  </nav>
 
-  <section>
-    <header>
-        {% block header %}{% endblock %}
-    </header>
-    {% for message in get_flashed_messages() %}
-        <div>{{ message }}</div>
-    {% endfor %}
-    {% block content %}{% endblock %}
-  </section>
-</body>
+    <p>Aqui você acompanha todas as suas tarefas e tem uma visão geral do seu progresso.</p>
+    <hr>
+    <p>Você tem uma conta?</p>
+    <div class="inline">
+        <div class="ui basic button">
+            <a href="{{ url_for('auth.login') }}">Entrar</a>
+        </div>
+
+        <div class="ui basic button">
+            <a href="{{ url_for('auth.register') }}">Cadastre-se</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

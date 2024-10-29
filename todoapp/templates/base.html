@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<title>ToDo-List | {% block title %}{% endblock %}</title>
+<!--link rel="stylesheet" href="{{ url_for('static', filename='css/semantic.css') }}"-->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css"
+/>
+<nav class="ui secondary menu">
+  <h1>
+    <a class="item" href="" style="background: lightgray">
+      Desenvolvimento Rápido de Aplicações em Python [ ARA0095 ]
+    </a>
+  </h1>
+  <div class="right menu">
+    {% if g.user %}
+    <span class="item">
+      <pre><b>Conectado:</b> {{ g.user['username'] }}</pre>
+    </span>
+    <a class="item" href="{{ url_for('pages.index') }}"
+      ><i class="home icon"></i>Home
+    </a>
+    <a class="item" href="{{ url_for('auth.logout') }}"
+      ><i class="sign-out icon"></i>Logout
+    </a>
+    {% else %}
+    <a class="item" href="{{ url_for('auth.register') }}"
+      ><i class="edit icon"></i>Registro
+    </a>
+    <a class="item" href="{{ url_for('auth.login') }}"
+      ><i class="sign-in icon"></i>Login
+    </a>
+    {% endif %}
+  </div>
+</nav>
+<section>
+  <header>{% block header %}{% endblock %}</header>
+  {% for message in get_flashed_messages() %}
+  <div>{{ message }}</div>
+  {% endfor %} {% block content %}{% endblock %}
+</section>
